@@ -75,6 +75,19 @@ I don't like emacs making backup files, so I completely remove them.
   (load-theme 'spacemacs-dark)
 #+END_SRC
 
+** Show git changes in fringe
+#+BEGIN_SRC emacs-lisp
+  (require 'git-gutter-fringe)
+  (global-git-gutter-mode +1)
+
+  (define-fringe-bitmap 'git-gutter-fr:added [#b11100000] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [#b11100000] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [#b11100000] nil nil '(center repeated))
+
+  (setq-default indicate-buffer-boundaries 'left)
+  (setq-default indicate-empty-lines +1)
+#+END_SRC
+
 ** Dashboard
 #+BEGIN_SRC emacs-lisp
   (dashboard-setup-startup-hook)
@@ -146,6 +159,18 @@ I don't like emacs making backup files, so I completely remove them.
                             company-echo-metadata-frontend))
   (add-to-list 'company-backends #'company-yasnippet)
   (setq company-backends '((company-capf company-yasnippet company-files)))
+#+END_SRC
+
+* C/C++ specific coding
+#+BEGIN_SRC emacs-lisp
+  (require 'cc-mode)
+  (setq c-default-style "linux"
+        c-basic-offset 4)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (require 'disaster)
+  (define-key c-mode-map (kbd "C-c d") 'disaster)
 #+END_SRC
 
 * Org mode
