@@ -9,6 +9,7 @@ Clone this repository in ~$HOME/.emacs.d~
 #+BEGIN_SRC emacs-lisp
   ;; This directory will contain external packages
   (add-to-list 'load-path "~/.emacs.d/ext")
+  (add-to-list 'load-path "~/.emacs.d/ext/el-easydraw")
 #+END_SRC
 
 * General configurations
@@ -207,5 +208,21 @@ I feel like I need a whole section for Org mode.
   (require 'org-agenda)
   (global-set-key "\C-ca" 'org-agenda)
 #+END_SRC
+
+** Draw diagrams
+~[[edraw:]]~ then ~C-c C-o~
+#+BEGIN_SRC emacs-lisp
+  (with-eval-after-load 'org
+    (require 'edraw-org)
+    (edraw-org-setup-default))
+  ;; When using the org-export-in-background option (when using the
+  ;; asynchronous export function), the following settings are
+  ;; required. This is because Emacs started in a separate process does
+  ;; not load org.el but only ox.el.
+  (with-eval-after-load "ox"
+    (require 'edraw-org)
+    (edraw-org-setup-exporter))
+#+END_SRC
+
 
 ** TODO Add more stuff in the future
