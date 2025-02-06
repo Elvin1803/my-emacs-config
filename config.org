@@ -3,7 +3,8 @@
 
 * This is my emacs configuration
 Clone this repository in ~$HOME/.emacs.d~
-*Make sure to execute =M-x all-the-icons-install-fonts= the first time you start Emacs !*
+
+*Make sure to execute ~M-x all-the-icons-install-fonts~ the first time you start Emacs !*
 
 #+BEGIN_SRC emacs-lisp
   ;; This directory will contain external packages
@@ -162,3 +163,5 @@ I feel like I need a whole section for Org mode.
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+END_SRC
+
+** TODO Add more stuff in the future
