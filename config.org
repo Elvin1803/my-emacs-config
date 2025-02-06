@@ -75,17 +75,28 @@ I don't like emacs making backup files, so I completely remove them.
   (load-theme 'spacemacs-dark)
 #+END_SRC
 
+** Scrolling
+#+BEGIN_SRC emacs-lisp
+  (setq redisplay-dont-pause t
+      scroll-margin 1
+      scroll-step 1
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
+  (setq mouse-wheel-follow-mouse 't)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+#+END_SRC
+
 ** Show git changes in fringe
 #+BEGIN_SRC emacs-lisp
   (require 'git-gutter-fringe)
-  (global-git-gutter-mode +1)
+  (global-git-gutter-mode 1)
 
   (define-fringe-bitmap 'git-gutter-fr:added [#b11100000] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [#b11100000] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [#b11100000] nil nil '(center repeated))
 
   (setq-default indicate-buffer-boundaries 'left)
-  (setq-default indicate-empty-lines +1)
 #+END_SRC
 
 ** Dashboard
@@ -168,6 +179,8 @@ I don't like emacs making backup files, so I completely remove them.
         c-basic-offset 4)
 #+END_SRC
 
+** Disaster
+Shows the assembly code for the file.
 #+BEGIN_SRC emacs-lisp
   (require 'disaster)
   (define-key c-mode-map (kbd "C-c d") 'disaster)
@@ -187,6 +200,12 @@ I feel like I need a whole section for Org mode.
 #+BEGIN_SRC emacs-lisp
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+END_SRC
+
+** Agenda
+#+BEGIN_SRC emacs-lisp
+  (require 'org-agenda)
+  (global-set-key "\C-ca" 'org-agenda)
 #+END_SRC
 
 ** TODO Add more stuff in the future
