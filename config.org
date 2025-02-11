@@ -187,6 +187,13 @@ Shows the assembly code for the file.
   (define-key c-mode-map (kbd "C-c d") 'disaster)
 #+END_SRC
 
+*  Rust config
+#+BEGIN_SRC emacs-lisp
+  (require 'rust-mode)
+  (add-hook 'rust-mode-hook
+            (lambda () (setq indent-tabs-mode nil)))
+#+END_SRC
+
 * Org mode
 I feel like I need a whole section for Org mode.
 
