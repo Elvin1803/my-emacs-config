@@ -5,6 +5,7 @@
 Clone this repository in ~$HOME/.emacs.d~
 
 *Make sure to execute ~M-x all-the-icons-install-fonts~ the first time you start Emacs !*
+(If you are on Windows, do not forget to install these fonts manually).
 
 #+BEGIN_SRC emacs-lisp
   ;; This directory will contain external packages
@@ -65,6 +66,8 @@ I don't like emacs making backup files, so I completely remove them.
   (global-display-line-numbers-mode 1)
 
   (global-visual-line-mode 1)
+
+  (set-face-attribute 'default (selected-frame) :height 115)
 
   ;; Do not show warnings
   (setq warning-minimum-level :error)
