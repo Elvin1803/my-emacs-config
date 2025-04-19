@@ -138,6 +138,14 @@ I don't like emacs making backup files, so I completely remove them.
 #+END_SRC
 
 * For code/text editing
+#+BEGIN_SRC emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (setq indent-line-function 'insert-tab)
+
+  (global-whitespace-mode t)
+#+END_SRC
+
 ** Projectile
 #+BEGIN_SRC emacs-lisp
   (projectile-mode 1)
@@ -179,7 +187,7 @@ I don't like emacs making backup files, so I completely remove them.
 * C/C++ specific coding
 #+BEGIN_SRC emacs-lisp
   (require 'cc-mode)
-  (setq c-default-style "linux"
+  (setq c-default-style "bsd"
         c-basic-offset 4)
 #+END_SRC
 
@@ -190,7 +198,13 @@ Shows the assembly code for the file.
   (define-key c-mode-map (kbd "C-c d") 'disaster)
 #+END_SRC
 
-*  Rust config
+* Java config
+#+BEGIN_SRC emacs-lisp
+  (require 'lsp-java)
+  (add-hook 'java-mode-hook #'lsp)
+#+END_SRC
+
+* Rust config
 #+BEGIN_SRC emacs-lisp
   (require 'rust-mode)
   (add-hook 'rust-mode-hook
