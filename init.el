@@ -32,7 +32,6 @@
     dashboard
     helm
     neotree
-    elcord
     ))
 
 (unless (file-exists-p package-user-dir)
@@ -42,9 +41,6 @@
 (dolist (package my/packages)
   (unless (package-installed-p package)
     (package-install package)))
-
-(require 'elcord)
-(elcord-mode)
 
 (require 'org)
 (org-babel-load-file "~/.emacs.d/config.org")
