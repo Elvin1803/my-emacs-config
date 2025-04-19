@@ -198,11 +198,6 @@ Shows the assembly code for the file.
   (define-key c-mode-map (kbd "C-c d") 'disaster)
 #+END_SRC
 
-* Java config
-#+BEGIN_SRC emacs-lisp
-  (require 'lsp-java)
-  (add-hook 'java-mode-hook #'lsp)
-#+END_SRC
 
 * Rust config
 #+BEGIN_SRC emacs-lisp

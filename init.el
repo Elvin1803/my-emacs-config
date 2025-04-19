@@ -22,7 +22,6 @@
     company
     lsp-mode
     lsp-ui
-    lsp-java
     rust-mode
     ;; Text editing / Navigation
     avy
