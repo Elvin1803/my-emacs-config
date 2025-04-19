@@ -32,6 +32,7 @@
     dashboard
     helm
     neotree
+    elcord
     ))
 
 (unless (file-exists-p package-user-dir)
@@ -42,6 +43,9 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+(require 'elcord)
+(elcord-mode)
+
 (require 'org)
 (org-babel-load-file "~/.emacs.d/config.org")
 
@@ -51,17 +55,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(nix-mode lsp-java rust-mode rust-analyzer git-gutter-fringe git-gutter yasnippet spacemacs-theme smartparens rainbow-delimiters projectile page-break-lines org-sticky-header neotree move-text magit lsp-ui helm dashboard company avy all-the-icons))
+   '(all-the-icons avy company dashboard elcord git-gutter
+                   git-gutter-fringe helm lsp-java lsp-ui magit
+                   move-text neotree nix-mode org-sticky-header
+                   page-break-lines projectile rainbow-delimiters
+                   rust-analyzer rust-mode smartparens spacemacs-theme
+                   yasnippet))
  '(whitespace-display-mappings
-   '((space-mark 32
-                 [183]
-                 [46])
-     (space-mark 160
-                 [164]
-                 [95])
-     (tab-mark 9
-               [187 9]
-               [92 9]))))
+   '((space-mark 32 [183] [46]) (space-mark 160 [164] [95])
+     (tab-mark 9 [187 9] [92 9]))))
 
 
 (custom-set-faces
