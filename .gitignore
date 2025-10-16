@@ -1,6 +1,7 @@
 .cache/*
 auto-save-list/*
 org-persist/*
+elpa/*
 elpaca/*
 
 config.el

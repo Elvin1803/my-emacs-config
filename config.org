@@ -8,33 +8,9 @@ Clone this repository in ~$HOME/.emacs.d~
 (If you are on Windows, do not forget to install these fonts manually).
 
 * General configurations
-** Annoying things
-Let's start by removing "annoying" things in the default emacs configuration:
-*** Remove startup message
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-#+END_SRC
-
-*** Remove useless UI
-#+begin_src emacs-lisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-#+end_src
-
-*** Turn off bell sound
-#+begin_src emacs-lisp
-  (setq ring-bell-function 'ignore)
-#+end_src
-
-*** Prevent Emacs from creating backup files
-#+BEGIN_SRC emacs-lisp
-  (setq make-backup-files nil)
-#+END_SRC
-
 ** Navigation keybinds
 I like to have my own keybindings for navigation, feel free to remove/edit them.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (global-set-key (kbd "M-i")   'previous-line)
   (global-set-key (kbd "M-k")   'next-line)
   (global-set-key (kbd "M-j")   'backward-char)
@@ -54,10 +30,10 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
   (global-set-key (kbd "C-x x") 'kill-region)
   (global-set-key (kbd "C-v")   'yank)
   (global-set-key (kbd "C-w")   'undo)
-#+END_SRC
+#+end_src
 
 ** Scrolling
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (setq redisplay-dont-pause t
         scroll-margin 1
         scroll-step 1
@@ -66,13 +42,42 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
 
   (setq mouse-wheel-follow-mouse 't)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-#+END_SRC
+#+end_src
 
 ** Interface look
+*** Theme
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :ensure t
+    :custom
+    ;; Global settings (defaults)
+    (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+    (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    :config
+    (load-theme 'doom-vibrant t)
+    ;; Personnal favorites:
+    ;; doom-vibrant
+    ;; doom-moonlight
+    ;; doom-tokyo-night
+
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Enable custom neotree theme (nerd-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
+#+end_src
+
 *** Display relative line numbers in every frame
 #+begin_src emacs-lisp
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode 1)
+#+end_src
+
+*** Show whitespaces in programming mode
+#+begin_src emacs-lisp
+  (add-hook 'prog-mode-hook 'whitespace-mode)
+  (setq whitespace-line-column 120)
 #+end_src
 
 *** Wrap lines at word boundaries near the right frame edge
@@ -80,28 +85,28 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
   (global-visual-line-mode 1)
 #+end_src
 
-** Dashboard
+* Dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
-  :ensure t
-  :config
-  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
-  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
-  (dashboard-setup-startup-hook))
-
-  (setq dashboard-banner-logo-title "Welcome to Emacs")
-  (setq dashboard-startup-banner (concat user-emacs-directory "/images/banner1.png"))
-  (setq dashboard-item-shortcuts '((recents   . "r")
-                                   (bookmarks . "m")
-                                   (projects  . "p")
-                                   (agenda    . "a")))
-  (setq dashboard-footer-messages
-        '("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
+    :ensure t
+    :config
+    (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+    (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+    (dashboard-setup-startup-hook)
+    :init
+    (setq dashboard-banner-logo-title "Welcome to Emacs")
+    (setq dashboard-startup-banner "~/.emacs.d/images/banner1.png")
+    (setq dashboard-item-shortcuts '((recents   . "r")
+                                     (bookmarks . "m")
+                                     (projects  . "p")
+                                     (agenda    . "a")))
+    (setq dashboard-footer-messages
+	'("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
           "If someone says it's wrong to hope, I will tell them that they're wrong every time. I could tell them that countless times!"
           "Protect the one thing you want to protect until the very end."
           "Make a contract with me, and become a magical girl!"))
-  (setq dashboard-show-shortcuts nil)
-  (setq dashboard-center-content t)
-  (setq dashboard-vertically-center-content t)
-  (setq dashboard-icon-type 'all-the-icons)
-  #+end_src
+    (setq dashboard-show-shortcuts nil)
+    (setq dashboard-center-content t)
+    (setq dashboard-vertically-center-content t)
+    (setq dashboard-icon-type 'all-the-icons))
+#+end_src
