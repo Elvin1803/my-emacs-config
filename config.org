@@ -1,0 +1,107 @@
+#+TITLE: Literate Emacs configuration
+#+AUTHOR: Elvin
+
+* This is my emacs configuration
+Clone this repository in ~$HOME/.emacs.d~
+
+*Make sure to execute ~M-x all-the-icons-install-fonts~ the first time you start Emacs !*
+(If you are on Windows, do not forget to install these fonts manually).
+
+* General configurations
+** Annoying things
+Let's start by removing "annoying" things in the default emacs configuration:
+*** Remove startup message
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+#+END_SRC
+
+*** Remove useless UI
+#+begin_src emacs-lisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
+
+*** Turn off bell sound
+#+begin_src emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+end_src
+
+*** Prevent Emacs from creating backup files
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files nil)
+#+END_SRC
+
+** Navigation keybinds
+I like to have my own keybindings for navigation, feel free to remove/edit them.
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-i")   'previous-line)
+  (global-set-key (kbd "M-k")   'next-line)
+  (global-set-key (kbd "M-j")   'backward-char)
+  (global-set-key (kbd "M-l")   'forward-char)
+  (global-set-key (kbd "M-u")   'backward-word)
+  (global-set-key (kbd "M-o")   'forward-word)
+  (global-set-key (kbd "M-y")   'move-beginning-of-line)
+  (global-set-key (kbd "M-p")   'move-end-of-line)
+  (global-set-key (kbd "M-[")   'beginning-of-defun)
+  (global-set-key (kbd "M-]")   'end-of-defun)
+  (global-set-key (kbd "M-,")   'beginning-of-buffer)
+  (global-set-key (kbd "M-.")   'end-of-buffer)
+
+  (global-set-key (kbd "M-n")   'kill-whole-line)
+  (global-set-key (kbd "M-d")   'duplicate-line)
+  (global-set-key (kbd "M-e")   'copy-from-above-command)
+  (global-set-key (kbd "C-x x") 'kill-region)
+  (global-set-key (kbd "C-v")   'yank)
+  (global-set-key (kbd "C-w")   'undo)
+#+END_SRC
+
+** Scrolling
+#+BEGIN_SRC emacs-lisp
+  (setq redisplay-dont-pause t
+        scroll-margin 1
+        scroll-step 1
+        scroll-conservatively 10000
+        scroll-preserve-screen-position 1)
+
+  (setq mouse-wheel-follow-mouse 't)
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+#+END_SRC
+
+** Interface look
+*** Display relative line numbers in every frame
+#+begin_src emacs-lisp
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode 1)
+#+end_src
+
+*** Wrap lines at word boundaries near the right frame edge
+#+begin_src emacs-lisp
+  (global-visual-line-mode 1)
+#+end_src
+
+** Dashboard
+#+begin_src emacs-lisp
+  (use-package dashboard
+  :ensure t
+  :config
+  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (dashboard-setup-startup-hook))
+
+  (setq dashboard-banner-logo-title "Welcome to Emacs")
+  (setq dashboard-startup-banner (concat user-emacs-directory "/images/banner1.png"))
+  (setq dashboard-item-shortcuts '((recents   . "r")
+                                   (bookmarks . "m")
+                                   (projects  . "p")
+                                   (agenda    . "a")))
+  (setq dashboard-footer-messages
+        '("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
+          "If someone says it's wrong to hope, I will tell them that they're wrong every time. I could tell them that countless times!"
+          "Protect the one thing you want to protect until the very end."
+          "Make a contract with me, and become a magical girl!"))
+  (setq dashboard-show-shortcuts nil)
+  (setq dashboard-center-content t)
+  (setq dashboard-vertically-center-content t)
+  (setq dashboard-icon-type 'all-the-icons)
+  #+end_src

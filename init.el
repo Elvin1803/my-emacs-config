@@ -1,11 +1,5 @@
 ;; Init.el
-
-(setq package-enable-at-startup nil)
-
-(if (eq system-type 'windows-nt)
-  (elpaca-no-symlink-mode)
-)
-
+;; Only used for elpaca bootstrap
 (defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
@@ -44,3 +38,15 @@
     (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
+
+(if (eq system-type 'windows-nt)
+  (elpaca-no-symlink-mode)
+)
+
+;; Install use-package support
+(elpaca elpaca-use-package
+  ;; Enable use-package :ensure support for Elpaca.
+  (elpaca-use-package-mode))
+
+;; Then load the org config file
+(org-babel-load-file "~/.emacs.d/config.org")

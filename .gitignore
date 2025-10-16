@@ -1,3 +1,8 @@
 .cache/*
 auto-save-list/*
+org-persist/*
 elpaca/*
+
+config.el
+recentf
+bookmarks
