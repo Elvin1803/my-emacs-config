@@ -82,10 +82,10 @@ I don't like emacs making backup files, so I completely remove them.
 ** Scrolling
 #+BEGIN_SRC emacs-lisp
   (setq redisplay-dont-pause t
-      scroll-margin 1
-      scroll-step 1
-      scroll-conservatively 10000
-      scroll-preserve-screen-position 1)
+        scroll-margin 1
+        scroll-step 1
+        scroll-conservatively 10000
+        scroll-preserve-screen-position 1)
 
   (setq mouse-wheel-follow-mouse 't)
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
@@ -143,7 +143,8 @@ I don't like emacs making backup files, so I completely remove them.
   (setq-default tab-width 4)
   (setq indent-line-function 'insert-tab)
 
-  (global-whitespace-mode t)
+  (add-hook 'prog-mode-hook 'whitespace-mode)
+  (setq whitespace-line-column 120)
 #+END_SRC
 
 ** Projectile
@@ -189,6 +190,7 @@ I don't like emacs making backup files, so I completely remove them.
   (require 'cc-mode)
   (setq c-default-style "bsd"
         c-basic-offset 4)
+  (cmake-ide-setup)
 #+END_SRC
 
 ** Disaster
@@ -196,14 +198,6 @@ Shows the assembly code for the file.
 #+BEGIN_SRC emacs-lisp
   (require 'disaster)
   (define-key c-mode-map (kbd "C-c d") 'disaster)
-#+END_SRC
-
-
-* Rust config
-#+BEGIN_SRC emacs-lisp
-  (require 'rust-mode)
-  (add-hook 'rust-mode-hook
-            (lambda () (setq indent-tabs-mode nil)))
 #+END_SRC
 
 * Org mode
