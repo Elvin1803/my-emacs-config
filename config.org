@@ -7,6 +7,11 @@ Clone this repository in ~$HOME/.emacs.d~
 *Make sure to execute ~M-x all-the-icons-install-fonts~ the first time you start Emacs !*
 (If you are on Windows, do not forget to install these fonts manually).
 
+#+begin_src emacs-lisp
+  ;; This directory will contain external packages
+  (add-to-list 'load-path "~/.emacs.d/ext")
+#+end_src
+
 * General configurations
 ** Navigation keybinds
 I like to have my own keybindings for navigation, feel free to remove/edit them.
@@ -44,11 +49,30 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
   (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 #+end_src
 
-** Interface look
-*** Theme
+** Electric pairs
+#+begin_src emacs-lisp
+  (use-package electric
+    :ensure nil
+    :init
+    (message "Loaded electric")
+    (electric-pair-mode +1)) ;; automatically insert closing parens
+#+end_src
+
+* Appearance
+** Install icons first
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+    :init
+    (message "Loaded all-the-icons"))
+
+  (use-package nerd-icons
+    :init
+    (message "Loaded nerd-font"))
+#+end_src
+
+** Theme
 #+begin_src emacs-lisp
   (use-package doom-themes
-    :ensure t
     :custom
     ;; Global settings (defaults)
     (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
@@ -68,45 +92,119 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
     (doom-themes-org-config))
 #+end_src
 
-*** Display relative line numbers in every frame
+** Rainbow delimiters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :init
+    (message "Loaded electric")
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+end_src
+
+** Git gutter
+#+begin_src emacs-lisp
+  (use-package git-gutter-fringe
+    :init
+    (message "Loaded git-gutter-fringe")
+    (setq-default indicate-buffer-boundaries 'left)
+    :config
+    (global-git-gutter-mode 1)
+    (define-fringe-bitmap 'git-gutter-fr:added [#b11100000] nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:modified [#b11100000] nil nil '(center repeated))
+    (define-fringe-bitmap 'git-gutter-fr:deleted [#b11100000] nil nil '(center repeated)))
+#+end_src
+
+** Display relative line numbers in every frame
 #+begin_src emacs-lisp
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode 1)
 #+end_src
 
-*** Show whitespaces in programming mode
+** Show whitespaces in programming mode
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook 'whitespace-mode)
   (setq whitespace-line-column 120)
 #+end_src
 
-*** Wrap lines at word boundaries near the right frame edge
+** Wrap lines at word boundaries near the right frame edge
 #+begin_src emacs-lisp
   (global-visual-line-mode 1)
 #+end_src
 
 * Dashboard
 #+begin_src emacs-lisp
-  (use-package dashboard
-    :ensure t
-    :config
-    (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
-    (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
-    (dashboard-setup-startup-hook)
-    :init
-    (setq dashboard-banner-logo-title "Welcome to Emacs")
-    (setq dashboard-startup-banner "~/.emacs.d/images/banner1.png")
-    (setq dashboard-item-shortcuts '((recents   . "r")
-                                     (bookmarks . "m")
-                                     (projects  . "p")
-                                     (agenda    . "a")))
-    (setq dashboard-footer-messages
-	'("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
+    (use-package dashboard
+      :init
+      (message "Loaded dashboard")
+      (setq dashboard-banner-logo-title "Welcome to Emacs")
+      (setq dashboard-startup-banner "~/.emacs.d/images/banner1.png")
+      (setq dashboard-item-shortcuts '((recents   . "r")
+                                       (bookmarks . "m")
+                                       (projects  . "p")
+                                       (agenda    . "a")))
+      (setq dashboard-footer-messages
+        '("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
           "If someone says it's wrong to hope, I will tell them that they're wrong every time. I could tell them that countless times!"
           "Protect the one thing you want to protect until the very end."
           "Make a contract with me, and become a magical girl!"))
-    (setq dashboard-show-shortcuts nil)
-    (setq dashboard-center-content t)
-    (setq dashboard-vertically-center-content t)
-    (setq dashboard-icon-type 'all-the-icons))
+      (setq dashboard-center-content t)
+      (setq dashboard-vertically-center-content t)
+      (setq dashboard-icon-type 'all-the-icons)
+      (setq dashboard-set-heading-icons t)
+      (setq dashboard-set-file-icons t)
+      :config
+      (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+      (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+      (dashboard-setup-startup-hook))
 #+end_src
+
+* Magit
+#+begin_src emacs-lisp
+#+end_src
+
+* File tree explorer
+#+begin_src emacs-lisp
+  (use-package neotree
+    :init
+    (message "Loaded neotree")
+    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+    (setq neo-smart-open t)
+    (setq projectile-switch-project-action 'neotree-projectile-action)
+    :config
+    (global-set-key (kbd "M-t") 'neotree-toggle))
+#+end_src
+
+* Helm
+#+begin_src emacs-lisp
+  (use-package helm
+    :init
+    (message "Loaded helm")
+    (global-set-key (kbd "M-x") #'helm-M-x)
+    (global-set-key (kbd "C-x C-f") #'helm-find-files)
+    (global-set-key (kbd "C-y") #'helm-show-kill-ring)
+    (global-set-key (kbd "C-x b") #'helm-mini))
+#+end_src
+
+* Org bullets
+#+begin_src emacs-lisp
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+
+* TODOS [2/4]
+- [-] Appearance [5/6]
+  - [X] Custom theme
+  - [X] All the icons
+  - [X] Display relative lines in frames
+  - [ ] Display column limit
+  - [X] Show whitespace in programming mode
+  - [X] Wrap lines at words boundaries
+- [X] Navigation [2/2]
+  - [X] Navigation keybinds
+  - [X] Smooth scrolling
+- [ ] Display dashboard on startup [0/1]
+  - [ ] Icons
+- [X] Electric pairs
+- [ ] Magit
+- [ ] C/CPP config
+- [ ] Projectile

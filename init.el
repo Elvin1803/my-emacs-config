@@ -47,6 +47,12 @@
 (elpaca elpaca-use-package
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
+(setq use-package-always-ensure t)
 
 ;; Then load the org config file
 (org-babel-load-file "~/.emacs.d/config.org")
+
+(custom-set-variables
+ '(whitespace-display-mappings
+   '((space-mark 32 [183] [46]) (space-mark 160 [164] [95])
+     (tab-mark 9 [187 9] [92 9]))))
