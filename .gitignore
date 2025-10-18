@@ -1,10 +1,11 @@
 .cache/*
 auto-save-list/*
-org-persist/*
 elpa/*
 elpaca/*
 fonts/*
+org-persist/*
+transient/*
 
+bookmarks
 config.el
 recentf
-bookmarks

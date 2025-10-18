@@ -86,8 +86,6 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
-    ;; Enable custom neotree theme (nerd-icons must be installed!)
-    (doom-themes-neotree-config)
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
 #+end_src
@@ -160,6 +158,14 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
 
 * Magit
 #+begin_src emacs-lisp
+  (use-package transient
+    :init
+    (message "Loaded transient"))
+
+  (use-package magit
+    :after transient
+    :init
+    (message "Loaded magit"))
 #+end_src
 
 * File tree explorer

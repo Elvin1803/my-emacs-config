@@ -56,3 +56,5 @@
  '(whitespace-display-mappings
    '((space-mark 32 [183] [46]) (space-mark 160 [164] [95])
      (tab-mark 9 [187 9] [92 9]))))
+
+;;; init.el ends here
