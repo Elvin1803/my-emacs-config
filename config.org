@@ -104,7 +104,6 @@ Frappe atomique qui fait danser la tecktonik
   (set-face-attribute 'default nil :height 110)
 #+end_src
 
-
 ** Rainbow delimiters
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
@@ -168,6 +167,18 @@ Only when programming and in org mode ig
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'prog-mode-hook 'visual-line-mode)
 #+end_src
+
+** Mode line
+Doom mode-line at the bottom of the frame
+#+begin_src emacs-lisp
+    (use-package doom-modeline
+      :init
+      (message "Loaded doom-modeline")
+      :config
+      (setq doom-modeline-project-detection 'file-name-with-project)
+      (doom-modeline-mode 1))
+#+end_src
+
 
 * Dashboard
 #+begin_src emacs-lisp
@@ -245,7 +256,6 @@ Only apply clang format on save if a .clang-format file is found
     (add-hook 'c-mode-hook #'clang-format-lite-save-hook))
 #+end_src
 
-
 * Org mode
 ** Org bullets
 #+begin_src emacs-lisp
@@ -258,7 +268,7 @@ Only apply clang format on save if a .clang-format file is found
   (setopt org-hide-emphasis-markers t)
 #+end_src
 
-* TODOS [5/10]
+* TODOS [6/11]
 - [X] Appearance [7/7]
   - [X] Custom theme
   - [X] All the icons
@@ -283,3 +293,4 @@ Only apply clang format on save if a .clang-format file is found
 - [ ] Elcord
 - [ ] Avy
   - [ ] Look into how powerful this is
+- [X] Doom modeline
