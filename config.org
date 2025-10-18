@@ -37,6 +37,15 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
   (global-set-key (kbd "C-w")   'undo)
 #+end_src
 
+** Avy
+Frappe atomique qui fait danser la tecktonik
+#+begin_src emacs-lisp
+  (use-package avy
+   :demand t
+   :bind
+   ("M-;" . avy-goto-word-1))
+#+end_src
+
 ** Scrolling
 #+begin_src emacs-lisp
   (setopt redisplay-dont-pause t
@@ -90,6 +99,12 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
     (doom-themes-org-config))
 #+end_src
 
+** Zoom level
+#+begin_src emacs-lisp
+  (set-face-attribute 'default nil :height 110)
+#+end_src
+
+
 ** Rainbow delimiters
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
@@ -128,7 +143,7 @@ Also allow toggling of the whitespace-mode with a keybind
 
 ** Column limit
 *** Display column limit
-120 is the default column limit
+120 is the default column limit, can change it with ~C-x f~
 #+begin_src emacs-lisp
   (setopt whitespace-line-column 120)
   (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
@@ -148,8 +163,10 @@ Also allow toggling of the whitespace-mode with a keybind
 #+end_src
 
 ** Wrap lines at word boundaries near the right frame edge
+Only when programming and in org mode ig
 #+begin_src emacs-lisp
-  (global-visual-line-mode 1)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'prog-mode-hook 'visual-line-mode)
 #+end_src
 
 * Dashboard
@@ -199,8 +216,8 @@ Also allow toggling of the whitespace-mode with a keybind
     (setopt neo-theme (if (display-graphic-p) 'icons 'arrow))
     (setopt neo-smart-open t)
     (setopt projectile-switch-project-action 'neotree-projectile-action)
-    :config
-    (global-set-key (kbd "M-t") 'neotree-toggle))
+    :bind
+    ("M-t" . neotree-toggle))
 #+end_src
 
 * Helm
@@ -208,11 +225,26 @@ Also allow toggling of the whitespace-mode with a keybind
   (use-package helm
     :init
     (message "Loaded helm")
-    (global-set-key (kbd "M-x") #'helm-M-x)
-    (global-set-key (kbd "C-x C-f") #'helm-find-files)
-    (global-set-key (kbd "C-y") #'helm-show-kill-ring)
-    (global-set-key (kbd "C-x b") #'helm-mini))
+    :bind
+    (("M-x"     . helm-M-x)
+     ("C-x C-f" . helm-find-files)
+     ("C-y"     . helm-show-kill-ring)
+     ("C-x b"   . helm-mini)))
 #+end_src
+
+* C/C++ specific coding
+** Clang format
+Only apply clang format on save if a .clang-format file is found
+#+begin_src emacs-lisp
+  (use-package clang-format-lite
+    :init
+    (message "Loaded clang-format-lite")
+    (setopt clang-format-lite-only-if-config t)
+    :config
+    (add-hook 'c++-mode-hook #'clang-format-lite-save-hook)
+    (add-hook 'c-mode-hook #'clang-format-lite-save-hook))
+#+end_src
+
 
 * Org mode
 ** Org bullets
@@ -226,7 +258,7 @@ Also allow toggling of the whitespace-mode with a keybind
   (setopt org-hide-emphasis-markers t)
 #+end_src
 
-* TODOS [4/7]
+* TODOS [5/10]
 - [X] Appearance [7/7]
   - [X] Custom theme
   - [X] All the icons
@@ -246,4 +278,8 @@ Also allow toggling of the whitespace-mode with a keybind
 - [X] Electric pairs
 - [X] Magit
 - [ ] C/CPP config
+- [X] auto clang format
 - [ ] Projectile
+- [ ] Elcord
+- [ ] Avy
+  - [ ] Look into how powerful this is
