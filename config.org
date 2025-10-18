@@ -119,15 +119,32 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
 #+end_src
 
 ** Show whitespaces in programming mode
+Also allow toggling of the whitespace-mode with a keybind
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook 'whitespace-mode)
-  (setopt whitespace-line-column 120)
+
+  (global-set-key (kbd "C-x t") 'whitespace-mode)
 #+end_src
 
-** Display column limit
+** Column limit
+*** Display column limit
+120 is the default column limit
 #+begin_src emacs-lisp
+  (setopt whitespace-line-column 120)
   (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-  (setopt display-fill-column-indicator-column 120)
+  (setopt fill-column 120)
+#+end_src
+*** Function to change the column limit
+#+begin_src emacs-lisp
+  (defun change-column-limit (new-limit)
+    "Change the column limit and reload whitespace mode"
+    (interactive "nEnter new column limit value: ")
+    (setopt fill-column new-limit)
+    (setopt whitespace-line-column new-limit)
+    (whitespace-mode 0)
+    (whitespace-mode 1))
+
+  (global-set-key (kbd "C-x f") 'change-column-limit)
 #+end_src
 
 ** Wrap lines at word boundaries near the right frame edge
@@ -197,24 +214,34 @@ I like to have my own keybindings for navigation, feel free to remove/edit them.
     (global-set-key (kbd "C-x b") #'helm-mini))
 #+end_src
 
-* Org bullets
+* Org mode
+** Org bullets
 #+begin_src emacs-lisp
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 #+end_src
 
+** Hide emphasis markers
+#+begin_src emacs-lisp
+  (setopt org-hide-emphasis-markers t)
+#+end_src
+
 * TODOS [4/7]
-- [X] Appearance [6/6]
+- [X] Appearance [7/7]
   - [X] Custom theme
   - [X] All the icons
   - [X] Display relative lines in frames
-  - [X] Display column limit
+  - [X] Column limit [2/2]
+    - [X] Display column limit
+    - [X] Function to dynamically change column limit
   - [X] Show whitespace in programming mode
+  - [X] Toggling whitespace mode with keybind
   - [X] Wrap lines at words boundaries
 - [X] Navigation [2/2]
   - [X] Navigation keybinds
   - [X] Smooth scrolling
-- [ ] Display dashboard on startup [0/1]
+- [-] Dashboard [1/2]
+  - [X] Display dashboard on startup
   - [ ] Icons
 - [X] Electric pairs
 - [X] Magit
