@@ -4,6 +4,7 @@ elpa/*
 elpaca/*
 fonts/*
 org-persist/*
+server/*
 transient/*
 
 bookmarks
