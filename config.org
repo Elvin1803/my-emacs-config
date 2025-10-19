@@ -12,6 +12,7 @@ Clone this repository in ~$HOME/.emacs.d~
   (add-to-list 'load-path "~/.emacs.d/ext")
 #+end_src
 
+
 * General configurations
 ** Navigation keybinds
 I like to have my own keybindings for navigation, feel free to remove/edit them.
@@ -67,6 +68,7 @@ Frappe atomique qui fait danser la tecktonik
     (electric-pair-mode +1)) ;; automatically insert closing parens
 #+end_src
 
+
 * Appearance
 ** Install icons first
 #+begin_src emacs-lisp
@@ -109,8 +111,8 @@ Frappe atomique qui fait danser la tecktonik
   (use-package rainbow-delimiters
     :init
     (message "Loaded electric")
-    :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    :hook
+    (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Git gutter
@@ -171,41 +173,43 @@ Only when programming and in org mode ig
 ** Mode line
 Doom mode-line at the bottom of the frame
 #+begin_src emacs-lisp
-    (use-package doom-modeline
-      :init
-      (message "Loaded doom-modeline")
-      :config
-      (setq doom-modeline-project-detection 'file-name-with-project)
-      (doom-modeline-mode 1))
+  (use-package doom-modeline
+    :init
+    (message "Loaded doom-modeline")
+    :config
+    (setq doom-modeline-project-detection 'file-name-with-project)
+    (doom-modeline-mode 1))
 #+end_src
 
 
 * Dashboard
 #+begin_src emacs-lisp
-    (use-package dashboard
-      :init
-      (message "Loaded dashboard")
-      (setopt dashboard-banner-logo-title "Welcome to Emacs")
-      (setopt dashboard-startup-banner "~/.emacs.d/images/banner1.png")
-      (setopt dashboard-item-shortcuts '((recents   . "r")
-                                       (bookmarks . "m")
-                                       (projects  . "p")
-                                       (agenda    . "a")))
-      (setopt dashboard-footer-messages
-        '("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
-          "If someone says it's wrong to hope, I will tell them that they're wrong every time. I could tell them that countless times!"
-          "Protect the one thing you want to protect until the very end."
-          "Make a contract with me, and become a magical girl!"))
-      (setopt dashboard-center-content t)
-      (setopt dashboard-vertically-center-content t)
-      (setopt dashboard-icon-type 'all-the-icons)
-      (setopt dashboard-set-heading-icons t)
-      (setopt dashboard-set-file-icons t)
-      :config
-      (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
-      (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
-      (dashboard-setup-startup-hook))
+  (use-package dashboard
+    :init
+    (message "Loaded dashboard")
+    (setopt dashboard-banner-logo-title "Welcome to Emacs")
+    (setopt dashboard-startup-banner "~/.emacs.d/images/banner1.png")
+    (setopt dashboard-item-shortcuts '((recents   . "r")
+                                     (bookmarks . "m")
+                                     (projects  . "p")
+                                     (agenda    . "a")))
+    (setopt dashboard-footer-messages
+      '("Always, somewhere, someone is fighting for you. As long as you remember her, you are not alone."
+        "If someone says it's wrong to hope, I will tell them that they're wrong every time. I could tell them that countless times!"
+        "Protect the one thing you want to protect until the very end."
+        "Make a contract with me, and become a magical girl!"))
+    (setopt dashboard-center-content t)
+    (setopt dashboard-vertically-center-content t)
+    (setopt dashboard-icon-type 'all-the-icons)
+    (setopt dashboard-set-heading-icons t)
+    (setopt dashboard-set-file-icons t)
+    :hook
+    (elpaca-after-init . dashboard-insert-startupify-lists)
+    (elpaca-after-init . dashboard-initialize)
+    :config
+    (dashboard-setup-startup-hook))
 #+end_src
+
 
 * Magit
 #+begin_src emacs-lisp
@@ -219,6 +223,7 @@ Doom mode-line at the bottom of the frame
     (message "Loaded magit"))
 #+end_src
 
+
 * File tree explorer
 #+begin_src emacs-lisp
   (use-package neotree
@@ -230,6 +235,7 @@ Doom mode-line at the bottom of the frame
     :bind
     ("M-t" . neotree-toggle))
 #+end_src
+
 
 * Helm
 #+begin_src emacs-lisp
@@ -243,6 +249,7 @@ Doom mode-line at the bottom of the frame
      ("C-x b"   . helm-mini)))
 #+end_src
 
+
 * C/C++ specific coding
 ** Clang format
 Only apply clang format on save if a .clang-format file is found
@@ -251,10 +258,11 @@ Only apply clang format on save if a .clang-format file is found
     :init
     (message "Loaded clang-format-lite")
     (setopt clang-format-lite-only-if-config t)
-    :config
-    (add-hook 'c++-mode-hook #'clang-format-lite-save-hook)
-    (add-hook 'c-mode-hook #'clang-format-lite-save-hook))
+    :hook
+    (c++-mode . clang-format-lite-save-hook)
+    (c-mode . clang-format-lite-save-hook))
 #+end_src
+
 
 * Org mode
 ** Org bullets
@@ -268,7 +276,8 @@ Only apply clang format on save if a .clang-format file is found
   (setopt org-hide-emphasis-markers t)
 #+end_src
 
-* TODOS [6/11]
+
+* TODOS [5/11]
 - [X] Appearance [7/7]
   - [X] Custom theme
   - [X] All the icons
@@ -287,8 +296,11 @@ Only apply clang format on save if a .clang-format file is found
   - [ ] Icons
 - [X] Electric pairs
 - [X] Magit
-- [ ] C/CPP config
-- [X] auto clang format
+- [-] C/CPP config [1/2]
+  - [ ] Set default style
+  - [ ] Disaster (Show assembly code for a file)
+  - [X] auto clang format
+- [ ] LSP
 - [ ] Projectile
 - [ ] Elcord
 - [ ] Avy
