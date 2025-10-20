@@ -260,6 +260,18 @@ And then autocompletion with corfu
       corfu-quit-no-match 'separator)
 #+end_src
 
+
+* Projectile
+#+begin_src emacs-lisp
+  (use-package projectile
+    :init
+    (message "Loaded projectile")
+    :config
+    (projectile-mode 1)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+#+end_src
+
+
 * Magit
 #+begin_src emacs-lisp
   (use-package transient
