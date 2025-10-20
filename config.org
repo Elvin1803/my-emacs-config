@@ -211,6 +211,55 @@ Doom mode-line at the bottom of the frame
 #+end_src
 
 
+* LSP and autocompletion
+Start by installing lsp-mode
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :init
+    (message "Loaded lsp-mode")
+    (setopt lsp-enable-on-type-formatting nil)
+    (setopt lsp-headerline-breadcrumb-segments '(file symbols))
+    :hook (prog-mode . lsp)
+    :commands lsp)
+
+  (use-package lsp-ui
+    :after lsp-mode
+    :init
+    (message "Loaded lsp-ui")
+    (setopt lsp-ui-doc-enable t)
+    (setopt lsp-ui-doc-delay 0.2)
+    :commands lsp-ui-mode)
+
+  (use-package helm-lsp
+    :after lsp-mode
+    :init
+    (message "Loaded helm-lsp")
+    :commands helm-lsp-workspace-symbol)
+
+  (use-package lsp-treemacs
+    :after lsp-mode
+    :init
+    (message "Loaded lsp-treemacs")
+    :commands lsp-treemacs-errors-list)
+#+end_src
+
+And then autocompletion with corfu
+#+begin_src emacs-lisp
+  (use-package corfu
+    :custom
+    (corfu-cycle t)
+    :init
+    (message "Loaded corfu")
+    (global-corfu-mode)
+    (corfu-history-mode)
+    (corfu-popupinfo-mode)
+    :config
+    (keymap-unset corfu-map "RET"))
+
+  (setopt corfu-auto t
+      corfu-quit-no-match 'separator)
+#+end_src
+
 * Magit
 #+begin_src emacs-lisp
   (use-package transient
