@@ -214,12 +214,41 @@ Doom mode-line at the bottom of the frame
 * LSP and autocompletion
 Start by installing lsp-mode
 #+begin_src emacs-lisp
+  ;; auto complete
+  (use-package company
+    :init
+    (message "Loaded company")
+    (setopt company-minimum-prefix-length 3)
+    (setopt company-idle-delay 0)
+    (setopt company-tooltip-align-annotations t)
+    (setopt company-frontends '(company-pseudo-tooltip-frontend
+                                company-preview-frontend
+                                company-echo-metadata-frontend))
+    (setopt company-backends '((company-capf company-yasnippet company-files)))
+    :config
+    (global-company-mode t))
+
+  (use-package yasnippet
+    :init
+    (message "Loaded yasnippet")
+    :config
+    (yas-global-mode 1))
+
+  ;; whatever this is
+  (use-package cape
+    :after company
+    :init
+    (message "Loaded cape"))
+
   (use-package lsp-mode
+    :after cape
     :init
     (message "Loaded lsp-mode")
+    (setopt lsp-completion-provider :capf)
     (setopt lsp-enable-on-type-formatting nil)
     (setopt lsp-headerline-breadcrumb-segments '(file symbols))
-    :hook (prog-mode . lsp)
+    :hook
+    (prog-mode . lsp)
     :commands lsp)
 
   (use-package lsp-ui
@@ -227,8 +256,12 @@ Start by installing lsp-mode
     :init
     (message "Loaded lsp-ui")
     (setopt lsp-ui-doc-enable t)
+    (setopt lsp-ui-doc-show-with-cursor t)
+    (setopt lsp-eldoc-enable-hover t)
+    (setopt eldoc-echo-area-use-multiline-p t)
     (setopt lsp-ui-doc-delay 0.2)
-    :commands lsp-ui-mode)
+    :hook
+    (lsp-mode . lsp-ui-mode))
 
   (use-package helm-lsp
     :after lsp-mode
@@ -241,23 +274,6 @@ Start by installing lsp-mode
     :init
     (message "Loaded lsp-treemacs")
     :commands lsp-treemacs-errors-list)
-#+end_src
-
-And then autocompletion with corfu
-#+begin_src emacs-lisp
-  (use-package corfu
-    :custom
-    (corfu-cycle t)
-    :init
-    (message "Loaded corfu")
-    (global-corfu-mode)
-    (corfu-history-mode)
-    (corfu-popupinfo-mode)
-    :config
-    (keymap-unset corfu-map "RET"))
-
-  (setopt corfu-auto t
-      corfu-quit-no-match 'separator)
 #+end_src
 
 
@@ -309,6 +325,7 @@ And then autocompletion with corfu
      ("C-y"     . helm-show-kill-ring)
      ("C-x b"   . helm-mini)))
 #+end_src
+
 
 * Elcord
 because why not
