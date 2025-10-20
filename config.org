@@ -323,6 +323,14 @@ Only apply clang format on save if a .clang-format file is found
     (c++-mode . clang-format-lite-save-hook)
     (c-mode . clang-format-lite-save-hook))
 #+end_src
+** Code formatting
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (setopt indent-line-function 'insert-tab)
+  (setopt c-default-style "bsd"
+          c-basic-offset 4)
+#+end_src
 
 
 * Org mode
@@ -338,7 +346,7 @@ Only apply clang format on save if a .clang-format file is found
 #+end_src
 
 
-* TODOS [5/11]
+* TODOS [8/11]
 - [X] Appearance [7/7]
   - [X] Custom theme
   - [X] All the icons
@@ -357,12 +365,11 @@ Only apply clang format on save if a .clang-format file is found
   - [ ] Icons
 - [X] Electric pairs
 - [X] Magit
-- [-] C/CPP config [1/2]
-  - [ ] Set default style
-  - [ ] Disaster (Show assembly code for a file)
+- [X] C/CPP config [2/2]
+  - [X] Set default style
   - [X] auto clang format
-- [ ] LSP
-- [ ] Projectile
+- [X] LSP
+- [X] Projectile
 - [ ] Elcord
 - [ ] Avy
   - [ ] Look into how powerful this is
