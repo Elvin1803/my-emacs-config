@@ -310,6 +310,16 @@ And then autocompletion with corfu
      ("C-x b"   . helm-mini)))
 #+end_src
 
+* Elcord
+because why not
+#+begin_src emacs-lisp
+  (use-package elcord
+    :init
+    (message "Loaded elcord")
+    :config
+    (elcord-mode))
+#+end_src
+
 
 * C/C++ specific coding
 ** Clang format
