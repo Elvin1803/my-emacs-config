@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: for
+# key: for
+# --
+for (${1:type} ${2:var}; ${2} < ${3:N}; ${2}++)
+{
+    $0
+}

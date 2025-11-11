@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: templated function
+# key: tplfn
+# --
+template<typename T>
+${1:Type} ${2:Name}(${3:Args...})
+{
+    $0
+}

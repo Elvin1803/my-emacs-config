@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: absclass
+# key: absclass
+# --
+class ${1:ClassName}
+{
+public:
+    ${1}();
+    virtual ~${1}();
+
+private:
+    $0
+};

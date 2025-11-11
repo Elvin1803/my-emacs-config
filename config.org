@@ -226,6 +226,7 @@ Start by installing lsp-mode
                                 company-echo-metadata-frontend))
     (setopt company-backends '((company-capf company-yasnippet company-files)))
     :config
+    (define-key company-active-map (kbd "<tab>") #'company-complete-selection)
     (global-company-mode t))
 
   (use-package yasnippet
@@ -233,6 +234,11 @@ Start by installing lsp-mode
     (message "Loaded yasnippet")
     :config
     (yas-global-mode 1))
+
+  (use-package yasnippet-snippets
+    :ensure t)
+
+  (global-set-key (kbd "C-<tab>") 'yas-expand)
 
   ;; whatever this is
   (use-package cape
