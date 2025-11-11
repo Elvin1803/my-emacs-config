@@ -14,5 +14,5 @@
 
 ;; Prevent Emacs from doing backups
 (setq make-backup-files nil)
-
+(setq warning-minimum-level :error)
 ;;; early-init.el ends here
