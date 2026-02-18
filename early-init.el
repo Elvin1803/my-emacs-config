@@ -12,6 +12,9 @@
 ;; Deactivate bell sound
 (setq ring-bell-function 'ignore)
 
+;; for lsp-booster
+(setenv "LSP_USE_PLISTS" "true")
+
 ;; Prevent Emacs from doing backups
 (setq make-backup-files nil)
 (setq warning-minimum-level :error)
